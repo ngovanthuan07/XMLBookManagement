@@ -1,0 +1,36 @@
+E:\thao\XML\XMLCK\XMLCK\bin\Debug\XMLCK.exe.config
+E:\thao\XML\XMLCK\XMLCK\bin\Debug\XMLCK.exe
+E:\thao\XML\XMLCK\XMLCK\bin\Debug\XMLCK.pdb
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.csprojAssemblyReference.cache
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form1.resources
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form2.resources
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form3.resources
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.Properties.Resources.resources
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.csproj.GenerateResource.cache
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.csproj.CoreCompileInputs.cache
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.exe
+E:\thao\XML\XMLCK\XMLCK\obj\Debug\XMLCK.pdb
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\bin\Debug\XMLCK.exe.config
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\bin\Debug\XMLCK.exe
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\bin\Debug\XMLCK.pdb
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.csprojAssemblyReference.cache
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form1.resources
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form2.resources
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form3.resources
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.Properties.Resources.resources
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.csproj.GenerateResource.cache
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.csproj.CoreCompileInputs.cache
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.exe
+D:\Hk120\Công nghệ XML\XMLCK\XMLCK\obj\Debug\XMLCK.pdb
+D:\Project XML\XMLCK\XMLCK\bin\Debug\XMLCK.exe.config
+D:\Project XML\XMLCK\XMLCK\bin\Debug\XMLCK.exe
+D:\Project XML\XMLCK\XMLCK\bin\Debug\XMLCK.pdb
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.csproj.AssemblyReference.cache
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form1.resources
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form2.resources
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.Form3.resources
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.Properties.Resources.resources
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.csproj.GenerateResource.cache
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.csproj.CoreCompileInputs.cache
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.exe
+D:\Project XML\XMLCK\XMLCK\obj\Debug\XMLCK.pdb

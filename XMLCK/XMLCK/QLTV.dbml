@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLTVVB" Class="QLTVDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=QLTVVB;Integrated Security=True" SettingsObjectName="XMLCK.Properties.Settings" SettingsPropertyName="QLTVVBConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CTMuonSach" Member="CTMuonSaches">
+    <Type Name="CTMuonSach">
+      <Column Name="MaCTMS" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaDocGia" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Column Name="MaSach" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Association Name="DocGia_CTMuonSach" Member="DocGia" ThisKey="MaDocGia" OtherKey="MaDocGia" Type="DocGia" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="Sach_CTMuonSach" Member="Sach" ThisKey="MaSach" OtherKey="MaSach" Type="Sach" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TheLoai" Member="TheLoais">
+    <Type Name="TheLoai">
+      <Column Name="MaTheLoai" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenTheLoai" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="TheLoai_Sach" Member="Saches" ThisKey="MaTheLoai" OtherKey="MaTheLoai" Type="Sach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DocGia" Member="DocGias">
+    <Type Name="DocGia">
+      <Column Name="MaDocGia" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenDocGia" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Ngaysinh" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Gioitinh" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="CMND" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Diachi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="DocGia_CTMuonSach" Member="CTMuonSaches" ThisKey="MaDocGia" OtherKey="MaDocGia" Type="CTMuonSach" />
+      <Association Name="DocGia_MuonSach" Member="MuonSaches" ThisKey="MaDocGia" OtherKey="MaDocGia" Type="MuonSach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MuonSach" Member="MuonSaches">
+    <Type Name="MuonSach">
+      <Column Name="MaID" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaNV" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Column Name="MaDocGia" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SoLuongMS" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ngaymuon" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Ngaytra" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Trangthai" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Association Name="DocGia_MuonSach" Member="DocGia" ThisKey="MaDocGia" OtherKey="MaDocGia" Type="DocGia" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="NhanVien_MuonSach" Member="NhanVien" ThisKey="MaNV" OtherKey="MaNV" Type="NhanVien" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NhanVien" Member="NhanViens">
+    <Type Name="NhanVien">
+      <Column Name="MaNV" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenNV" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Ngaysinh" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Gioitinh" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="NgayVaoLam" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="CMND" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="ChucVu" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="NhanVien_MuonSach" Member="MuonSaches" ThisKey="MaNV" OtherKey="MaNV" Type="MuonSach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NhaXuatBan" Member="NhaXuatBans">
+    <Type Name="NhaXuatBan">
+      <Column Name="MaNXB" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenNXB" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="NhaXuatBan_Sach" Member="Saches" ThisKey="MaNXB" OtherKey="MaNXB" Type="Sach" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QTV" Member="QTVs">
+    <Type Name="QTV">
+      <Column Name="TenDN" Type="System.String" DbType="Char(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Pass" Type="System.String" DbType="Char(20)" CanBeNull="true" />
+      <Column Name="TenQTV" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Ngaysinh" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Thongtin" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Sdt" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Diachi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sach" Member="Saches">
+    <Type Name="Sach">
+      <Column Name="MaSach" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenSach" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MaTacGia" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Column Name="MaTheLoai" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Column Name="MaNXB" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Column Name="NamSX" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Sach_CTMuonSach" Member="CTMuonSaches" ThisKey="MaSach" OtherKey="MaSach" Type="CTMuonSach" />
+      <Association Name="NhaXuatBan_Sach" Member="NhaXuatBan" ThisKey="MaNXB" OtherKey="MaNXB" Type="NhaXuatBan" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="TheLoai_Sach" Member="TheLoai" ThisKey="MaTheLoai" OtherKey="MaTheLoai" Type="TheLoai" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="TacGia_Sach" Member="TacGia" ThisKey="MaTacGia" OtherKey="MaTacGia" Type="TacGia" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TacGia" Member="TacGias">
+    <Type Name="TacGia">
+      <Column Name="MaTacGia" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenTacGia" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="TacGia_Sach" Member="Saches" ThisKey="MaTacGia" OtherKey="MaTacGia" Type="Sach" />
+    </Type>
+  </Table>
+</Database>

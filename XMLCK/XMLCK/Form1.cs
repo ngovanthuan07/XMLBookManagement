@@ -33,6 +33,8 @@ namespace XMLCK
                 if (d.Count() == 1)
                 {
                     MessageBox.Show("Đăng Nhập Thành Công");
+                    StaticUser.Username = TBLogin_52.Text;
+                    StaticUser.Password = TBPass_52.Text;
                     form2.Show();
                     this.Hide();
                 }
@@ -52,7 +54,7 @@ namespace XMLCK
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-                TBPass_52.PasswordChar = CheckBox1.Checked ? '*':'\0';
+            TBPass_52.PasswordChar = CheckBox1.Checked ? '\0' : '*';
         }
 
         private void PictureBox3_Click(object sender, EventArgs e)
@@ -62,9 +64,8 @@ namespace XMLCK
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-
-            
+            CheckBox1.Checked = false;
+            TBPass_52.PasswordChar = CheckBox1.Checked ? '\0' : '*';
         }
         
     }

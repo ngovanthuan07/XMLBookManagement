@@ -101,10 +101,27 @@ namespace XMLCK
             Tab2_52.SelectedTab = TabC_Search;
             QLTVDataContext db = new QLTVDataContext();
 
-            DataGridViewSearch.DataSource = db.Saches.Select(s => s);
-            var q = db.NhanViens.Select(c => new { c.MaNV });
-            ComBox_MaTGia_52.DataSource = q.ToList();
-            ComBox_MaTGia_52.ValueMember = "MaNV";
+            DataGridViewSearch.DataSource = from s in db.Saches
+                                            from tg in db.TacGias
+                                            from nxb in db.NhaXuatBans
+                                            from tl in db.TheLoais
+                                            where s.MaTacGia == tg.MaTacGia
+                                            where s.MaNXB == nxb.MaNXB
+                                            where s.MaTheLoai == tl.MaTheLoai
+                                            orderby s.MaSach ascending
+                                            select new
+                                            {
+                                                MaSach = s.MaSach,
+                                                TenSach = s.TenSach,
+                                                MaTacGia = s.MaTacGia,
+                                                TenTacGia = tg.TenTacGia,
+                                                MaTheLoai = tl.MaTheLoai,
+                                                TenTheLoai = tl.TenTheLoai,
+                                                MaNXB = nxb.MaNXB,
+                                                TenNXB = nxb.TenNXB,
+                                                NamSX = s.NamSX,
+                                            };
+
         }
 
         private void Label2_Click(object sender, EventArgs e)
@@ -145,7 +162,31 @@ namespace XMLCK
 
 
 
-            DataGridViewMS.DataSource = db.MuonSaches.Select(s => s);
+            loadMuonTraSach();
+        }
+
+        public void loadMuonTraSach()
+        {
+            QLTVDataContext db = new QLTVDataContext();
+            DataGridViewMS.DataSource = from ms in db.MuonSaches
+                                        from nv in db.NhanViens
+                                        from dg in db.DocGias
+                                        where ms.MaDocGia == dg.MaDocGia
+                                        where ms.MaNV == nv.MaNV
+                                        orderby ms.MaID ascending
+                                        select new
+                                        {
+                                            MaID = ms.MaID,
+                                            MaNV = ms.MaNV,
+                                            TenNV = nv.TenNV,
+                                            MaDocGia = ms.MaDocGia,
+                                            TenDocGia = dg.TenDocGia,
+                                            SoLuongMS = ms.SoLuongMS,
+                                            Ngaymuon = ms.Ngaymuon,
+                                            Ngaytra = ms.Ngaytra,
+                                            Trangthai = ms.Trangthai,
+                                        };
+
         }
 
         private void Label4_Click(object sender, EventArgs e)
@@ -158,6 +199,7 @@ namespace XMLCK
 
         private void CBox_Tienich_52_CheckedChanged(object sender, EventArgs e)
         {
+            /*
             if (CBox_Tienich_52.Checked)
             {
                 Tab2_52.TabPages.Remove(TabC_Tienich);
@@ -169,7 +211,7 @@ namespace XMLCK
             {
                 Tab2_52.TabPages.Remove(TabC_Tienich);
             }
-
+            */
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -187,41 +229,109 @@ namespace XMLCK
         private void BT_SearchDG_52_Click(object sender, EventArgs e)
         {
             QLTVDataContext db = new QLTVDataContext();
-           
+
             if (CBoxSearchS.SelectedItem != null)
             {
                 if (TB_SearchDG_52.Text != "")
                 {
                     if (CBoxSearchS.SelectedIndex == 0)
                     {
-                        DataGridViewSearch.DataSource = db.Saches.Where(s => s.TenSach.Contains(TB_SearchDG_52.Text));
+                        DataGridViewSearch.DataSource = from s in db.Saches
+                                                        from tg in db.TacGias
+                                                        from nxb in db.NhaXuatBans
+                                                        from tl in db.TheLoais
+                                                        where s.MaTacGia == tg.MaTacGia
+                                                        where s.MaNXB == nxb.MaNXB
+                                                        where s.MaTheLoai == tl.MaTheLoai
+                                                        where s.TenSach.Contains(TB_SearchDG_52.Text)
+                                                        orderby s.MaSach ascending
+                                                        select new
+                                                        {
+                                                            MaSach = s.MaSach,
+                                                            TenSach = s.TenSach,
+                                                            MaTacGia = s.MaTacGia,
+                                                            TenTacGia = tg.TenTacGia,
+                                                            MaTheLoai = tl.MaTheLoai,
+                                                            TenTheLoai = tl.TenTheLoai,
+                                                            MaNXB = nxb.MaNXB,
+                                                            TenNXB = nxb.TenNXB,
+                                                            NamSX = s.NamSX,
+                                                        };
                     }
                     else
                     {
                         if (CBoxSearchS.SelectedIndex == 1)
                         {
-                            DataGridViewSearch.DataSource = from u in db.Saches
-                                                            from t in db.TacGias
-                                                            where t.TenTacGia.Contains(TB_SearchDG_52.Text)
-                                                            where u.MaTacGia == t.MaTacGia
-                                                            select u;
+                            DataGridViewSearch.DataSource = from s in db.Saches
+                                                            from tg in db.TacGias
+                                                            from nxb in db.NhaXuatBans
+                                                            from tl in db.TheLoais
+                                                            where s.MaTacGia == tg.MaTacGia
+                                                            where s.MaNXB == nxb.MaNXB
+                                                            where s.MaTheLoai == tl.MaTheLoai
+                                                            where tg.TenTacGia.Contains(TB_SearchDG_52.Text)
+                                                            orderby s.MaSach ascending
+                                                            select new
+                                                            {
+                                                                MaSach = s.MaSach,
+                                                                TenSach = s.TenSach,
+                                                                MaTacGia = s.MaTacGia,
+                                                                TenTacGia = tg.TenTacGia,
+                                                                MaTheLoai = tl.MaTheLoai,
+                                                                TenTheLoai = tl.TenTheLoai,
+                                                                MaNXB = nxb.MaNXB,
+                                                                TenNXB = nxb.TenNXB,
+                                                                NamSX = s.NamSX,
+                                                            };
                         }
                         else
                         {
-                            DataGridViewSearch.DataSource = from u in db.Saches
-                                                            from t in db.TheLoais
-                                                            where t.TenTheLoai.Contains(TB_SearchDG_52.Text)
-                                                            where u.MaTheLoai == t.MaTheLoai
-                                                            select u;
+                            DataGridViewSearch.DataSource = from s in db.Saches
+                                                            from tg in db.TacGias
+                                                            from nxb in db.NhaXuatBans
+                                                            from tl in db.TheLoais
+                                                            where s.MaTacGia == tg.MaTacGia
+                                                            where s.MaNXB == nxb.MaNXB
+                                                            where s.MaTheLoai == tl.MaTheLoai
+                                                            where tl.TenTheLoai.Contains(TB_SearchDG_52.Text)
+                                                            orderby s.MaSach ascending
+                                                            select new
+                                                            {
+                                                                MaSach = s.MaSach,
+                                                                TenSach = s.TenSach,
+                                                                MaTacGia = s.MaTacGia,
+                                                                TenTacGia = tg.TenTacGia,
+                                                                MaTheLoai = tl.MaTheLoai,
+                                                                TenTheLoai = tl.TenTheLoai,
+                                                                MaNXB = nxb.MaNXB,
+                                                                TenNXB = nxb.TenNXB,
+                                                                NamSX = s.NamSX,
+                                                            };
                         }
                     }
                 }
                 else
                 {
-                    DataGridViewSearch.DataSource = from u in db.Saches
-                                                    from t in db.TacGias
-                                                    where u.MaTacGia == t.MaTacGia
-                                                    select u;
+                    DataGridViewSearch.DataSource = from s in db.Saches
+                                                    from tg in db.TacGias
+                                                    from nxb in db.NhaXuatBans
+                                                    from tl in db.TheLoais
+                                                    where s.MaTacGia == tg.MaTacGia
+                                                    where s.MaNXB == nxb.MaNXB
+                                                    where s.MaTheLoai == tl.MaTheLoai
+                                                    orderby s.MaSach ascending
+                                                    select new
+                                                    {
+                                                        MaSach = s.MaSach,
+                                                        TenSach = s.TenSach,
+                                                        MaTacGia = s.MaTacGia,
+                                                        TenTacGia = tg.TenTacGia,
+                                                        MaTheLoai = tl.MaTheLoai,
+                                                        TenTheLoai = tl.TenTheLoai,
+                                                        MaNXB = nxb.MaNXB,
+                                                        TenNXB = nxb.TenNXB,
+                                                        NamSX = s.NamSX,
+                                                    };
                 }
             }
             else
@@ -240,27 +350,102 @@ namespace XMLCK
                 {
                     if (CBoxSearchS.SelectedIndex == 0)
                     {
-                        DataGridViewSearch.DataSource = db.Saches.Where(s => s.TenSach.Contains(TB_SearchDG_52.Text));
+                        DataGridViewSearch.DataSource = from s in db.Saches
+                                                        from tg in db.TacGias
+                                                        from nxb in db.NhaXuatBans
+                                                        from tl in db.TheLoais
+                                                        where s.MaTacGia == tg.MaTacGia
+                                                        where s.MaNXB == nxb.MaNXB
+                                                        where s.MaTheLoai == tl.MaTheLoai
+                                                        where s.TenSach.Contains(TB_SearchDG_52.Text)
+                                                        orderby s.MaSach ascending
+                                                        select new
+                                                        {
+                                                            MaSach = s.MaSach,
+                                                            TenSach = s.TenSach,
+                                                            MaTacGia = s.MaTacGia,
+                                                            TenTacGia = tg.TenTacGia,
+                                                            MaTheLoai = tl.MaTheLoai,
+                                                            TenTheLoai = tl.TenTheLoai,
+                                                            MaNXB = nxb.MaNXB,
+                                                            TenNXB = nxb.TenNXB,
+                                                            NamSX = s.NamSX,
+                                                        };
                     }
                     else
                     {
                         if (CBoxSearchS.SelectedIndex == 1)
                         {
-                            DataGridViewSearch.DataSource = from u in db.Saches
-                                                            from t in db.TacGias
-                                                            where t.TenTacGia.Contains(TB_SearchDG_52.Text)
-                                                            where u.MaTacGia == t.MaTacGia
-                                                            select u;
+                            DataGridViewSearch.DataSource = from s in db.Saches
+                                                            from tg in db.TacGias
+                                                            from nxb in db.NhaXuatBans
+                                                            from tl in db.TheLoais
+                                                            where s.MaTacGia == tg.MaTacGia
+                                                            where s.MaNXB == nxb.MaNXB
+                                                            where s.MaTheLoai == tl.MaTheLoai
+                                                            where tg.TenTacGia.Contains(TB_SearchDG_52.Text)
+                                                            orderby s.MaSach ascending
+                                                            select new
+                                                            {
+                                                                MaSach = s.MaSach,
+                                                                TenSach = s.TenSach,
+                                                                MaTacGia = s.MaTacGia,
+                                                                TenTacGia = tg.TenTacGia,
+                                                                MaTheLoai = tl.MaTheLoai,
+                                                                TenTheLoai = tl.TenTheLoai,
+                                                                MaNXB = nxb.MaNXB,
+                                                                TenNXB = nxb.TenNXB,
+                                                                NamSX = s.NamSX,
+                                                            };
                         }
                         else
                         {
-                            DataGridViewSearch.DataSource = from u in db.Saches
-                                                            from t in db.TheLoais
-                                                            where t.TenTheLoai.Contains(TB_SearchDG_52.Text)
-                                                            where u.MaTheLoai == t.MaTheLoai
-                                                            select u;
+                            DataGridViewSearch.DataSource = from s in db.Saches
+                                                            from tg in db.TacGias
+                                                            from nxb in db.NhaXuatBans
+                                                            from tl in db.TheLoais
+                                                            where s.MaTacGia == tg.MaTacGia
+                                                            where s.MaNXB == nxb.MaNXB
+                                                            where s.MaTheLoai == tl.MaTheLoai
+                                                            where tl.TenTheLoai.Contains(TB_SearchDG_52.Text)
+                                                            orderby s.MaSach ascending
+                                                            select new
+                                                            {
+                                                                MaSach = s.MaSach,
+                                                                TenSach = s.TenSach,
+                                                                MaTacGia = s.MaTacGia,
+                                                                TenTacGia = tg.TenTacGia,
+                                                                MaTheLoai = tl.MaTheLoai,
+                                                                TenTheLoai = tl.TenTheLoai,
+                                                                MaNXB = nxb.MaNXB,
+                                                                TenNXB = nxb.TenNXB,
+                                                                NamSX = s.NamSX,
+                                                            };
                         }
                     }
+                }
+                else
+                {
+                    DataGridViewSearch.DataSource = from s in db.Saches
+                                                    from tg in db.TacGias
+                                                    from nxb in db.NhaXuatBans
+                                                    from tl in db.TheLoais
+                                                    where s.MaTacGia == tg.MaTacGia
+                                                    where s.MaNXB == nxb.MaNXB
+                                                    where s.MaTheLoai == tl.MaTheLoai
+                                                    orderby s.MaSach ascending
+                                                    select new
+                                                    {
+                                                        MaSach = s.MaSach,
+                                                        TenSach = s.TenSach,
+                                                        MaTacGia = s.MaTacGia,
+                                                        TenTacGia = tg.TenTacGia,
+                                                        MaTheLoai = tl.MaTheLoai,
+                                                        TenTheLoai = tl.TenTheLoai,
+                                                        MaNXB = nxb.MaNXB,
+                                                        TenNXB = nxb.TenNXB,
+                                                        NamSX = s.NamSX,
+                                                    };
                 }
             }
             else
@@ -272,65 +457,50 @@ namespace XMLCK
         private void BT_SearchNC_52_Click(object sender, EventArgs e)
         {
             QLTVDataContext db = new QLTVDataContext();
-            if (TB_TKNCS_52.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập từ khóa!", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                if (TB_TKNCTG_52.Text == "" && TB_TKNCTL_52.Text == "")
-                {
-                    DataGridViewSearch.DataSource = db.Saches.Where(s => s.TenSach.Contains(TB_TKNCS_52.Text));
-                }
-                else
-                {
-                    if (TB_TKNCTG_52.Text == "")
-                    {
-                        DataGridViewSearch.DataSource = from u in db.Saches
-                                                        from t in db.TheLoais
-                                                        where t.TenTheLoai.Contains(TB_TKNCTL_52.Text)
-                                                        where u.TenSach.Contains(TB_TKNCS_52.Text)
-                                                        select u;
-                    }
-                    else
-                    {
-                        if (TB_TKNCTL_52.Text == "")
-                        {
-                            DataGridViewSearch.DataSource = from u in db.Saches
-                                                            from t in db.TacGias
-                                                            where t.TenTacGia.Contains(TB_TKNCTG_52.Text)
-                                                            where u.TenSach.Contains(TB_TKNCS_52.Text)
-                                                            select u;
-                        }
-                        else
-                        {
-                            DataGridViewSearch.DataSource = from u in db.Saches
-                                                            from t in db.TacGias
-                                                            from tl in db.TheLoais
-                                                            where t.TenTacGia.Contains(TB_TKNCTG_52.Text)
-                                                            where u.TenSach.Contains(TB_TKNCS_52.Text)
-                                                            where tl.TenTheLoai.Contains(TB_TKNCTL_52.Text)
-                                                            select u;
-                        }
-
-                    }
-                }
-            }
+            DataGridViewSearch.DataSource = from s in db.Saches
+                                            from tg in db.TacGias
+                                            from nxb in db.NhaXuatBans
+                                            from tl in db.TheLoais
+                                            where s.MaTacGia == tg.MaTacGia
+                                            where s.MaNXB == nxb.MaNXB
+                                            where s.MaTheLoai == tl.MaTheLoai
+                                            where s.TenSach.Contains(TB_TKNCS_52.Text)
+                                            where tg.TenTacGia.Contains(TB_TKNCTG_52.Text)
+                                            where tl.TenTheLoai.Contains(TB_TKNCTL_52.Text)
+                                            orderby s.MaSach ascending
+                                            select new
+                                            {
+                                                MaSach = s.MaSach,
+                                                TenSach = s.TenSach,
+                                                MaTacGia = s.MaTacGia,
+                                                TenTacGia = tg.TenTacGia,
+                                                MaTheLoai = tl.MaTheLoai,
+                                                TenTheLoai = tl.TenTheLoai,
+                                                MaNXB = nxb.MaNXB,
+                                                TenNXB = nxb.TenNXB,
+                                                NamSX = s.NamSX,
+                                            };
         }
 
         private void BT_XoaDG_52_Click(object sender, EventArgs e)
         {
-            QLTVDataContext db = new QLTVDataContext();
-            String id = DataGridViewDG.SelectedCells[0].OwningRow.Cells["MaDocGia"].Value.ToString();
-            TB_MaDG_52.Text = id;
-            TB_HoTenDG_52.Text = DataGridViewDG.SelectedCells[0].OwningRow.Cells["TenDocGia"].Value.ToString();
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                String id = DataGridViewDG.SelectedCells[0].OwningRow.Cells["MaDocGia"].Value.ToString();
+                TB_MaDG_52.Text = id;
+                TB_HoTenDG_52.Text = DataGridViewDG.SelectedCells[0].OwningRow.Cells["TenDocGia"].Value.ToString();
 
-            DocGia delete = db.DocGias.Where(d => d.MaDocGia.Equals(id)).SingleOrDefault();
-            db.DocGias.DeleteOnSubmit(delete);
-            db.SubmitChanges();
-            MessageBox.Show("Xóa Thành Công");
-            loaddata();
-
+                DocGia delete = db.DocGias.Where(d => d.MaDocGia.Equals(id)).SingleOrDefault();
+                db.DocGias.DeleteOnSubmit(delete);
+                db.SubmitChanges();
+                MessageBox.Show("Xóa Thành Công");
+                loaddata();
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi rồi bạn");
+            }
         }
 
         private void BT_ThemDG_52_Click(object sender, EventArgs e)
@@ -368,25 +538,22 @@ namespace XMLCK
 
         private void BT_LuuDG_52_Click(object sender, EventArgs e)
         {
-            string maDocGia = TB_MaDG_52.Text,
-            hoTen = TB_HoTenDG_52.Text,
-            diaChi = TB_DiaChiDG_52.Text,
-            cMND = TB_CmndDG_52.Text,
-            dienThoai = TB_SDTDG_52.Text;
-            string gioiTinh = RadioBT_GTNam_52.Checked ? "Nam" : "Nữ";
-            string ngaySinh = dateTimePicker1.Text;
-            QLTVDataContext db = new QLTVDataContext();
-            var updateDocGia = (from s in db.DocGias where s.MaDocGia == maDocGia select s).First();
-            updateDocGia.TenDocGia = hoTen;
-            updateDocGia.Ngaysinh = ngaySinh;
-            updateDocGia.Gioitinh = gioiTinh;
-            updateDocGia.CMND = cMND;
-            updateDocGia.SDT = dienThoai;
-
-
-
             try
             {
+                string maDocGia = TB_MaDG_52.Text,
+                hoTen = TB_HoTenDG_52.Text,
+                diaChi = TB_DiaChiDG_52.Text,
+                cMND = TB_CmndDG_52.Text,
+                dienThoai = TB_SDTDG_52.Text;
+                string gioiTinh = RadioBT_GTNam_52.Checked ? "Nam" : "Nữ";
+                string ngaySinh = dateTimePicker1.Text;
+                QLTVDataContext db = new QLTVDataContext();
+                var updateDocGia = (from s in db.DocGias where s.MaDocGia == maDocGia select s).First();
+                updateDocGia.TenDocGia = hoTen;
+                updateDocGia.Ngaysinh = ngaySinh;
+                updateDocGia.Gioitinh = gioiTinh;
+                updateDocGia.CMND = cMND;
+                updateDocGia.SDT = dienThoai;
                 db.SubmitChanges();
                 MessageBox.Show("Cập nhật thành công");
                 loaddata();
@@ -506,27 +673,28 @@ namespace XMLCK
 
         private void BT_LuwuNV_52_Click(object sender, EventArgs e)
         {
-            string maNV = TB_MaNV_52.Text,
-            tenNV = TB_TenNV_52.Text,
-            ngaySinh = TB_NgaySNV_52.Text,
-            gioiTinh = RadioBT_GTNamNV_52.Checked ? "Nam" : "Nữ",
-            ngayVaoLam = TB_NgayvlNV_52.Text,
-             cMND = TB_CMNDNV_52.Text,
-            sDT = TB_SdtNV_52.Text,
-            chucVu = TB_ChucvuNV_52.Text,
-            diaChi = TB_diachiNV_52.Text;
-            QLTVDataContext db = new QLTVDataContext();
-            var updateNhanVien = (from s in db.NhanViens where s.MaNV == maNV select s).First();
-            updateNhanVien.TenNV = tenNV;
-            updateNhanVien.Ngaysinh = ngaySinh;
-            updateNhanVien.Gioitinh = gioiTinh;
-            updateNhanVien.Ngaysinh = ngayVaoLam;
-            updateNhanVien.CMND = cMND;
-            updateNhanVien.SDT = sDT;
-            updateNhanVien.ChucVu = chucVu;
-            updateNhanVien.DiaChi = diaChi;
+
             try
             {
+                string maNV = TB_MaNV_52.Text,
+                tenNV = TB_TenNV_52.Text,
+                ngaySinh = TB_NgaySNV_52.Text,
+                gioiTinh = RadioBT_GTNamNV_52.Checked ? "Nam" : "Nữ",
+                ngayVaoLam = TB_NgayvlNV_52.Text,
+                 cMND = TB_CMNDNV_52.Text,
+                sDT = TB_SdtNV_52.Text,
+                chucVu = TB_ChucvuNV_52.Text,
+                diaChi = TB_diachiNV_52.Text;
+                QLTVDataContext db = new QLTVDataContext();
+                var updateNhanVien = (from s in db.NhanViens where s.MaNV == maNV select s).First();
+                updateNhanVien.TenNV = tenNV;
+                updateNhanVien.Ngaysinh = ngaySinh;
+                updateNhanVien.Gioitinh = gioiTinh;
+                updateNhanVien.Ngaysinh = ngayVaoLam;
+                updateNhanVien.CMND = cMND;
+                updateNhanVien.SDT = sDT;
+                updateNhanVien.ChucVu = chucVu;
+                updateNhanVien.DiaChi = diaChi;
                 db.SubmitChanges();
                 MessageBox.Show("Cập nhật thành công");
                 loadDataNhanVien();
@@ -539,13 +707,20 @@ namespace XMLCK
 
         private void BT_XoaNV_52_Click(object sender, EventArgs e)
         {
-            QLTVDataContext db = new QLTVDataContext();
-            String id = DataGridViewNV.SelectedCells[0].OwningRow.Cells["MaNV"].Value.ToString();
-            NhanVien deleteNhanVien = db.NhanViens.Where(d => d.MaNV.Equals(id)).SingleOrDefault();
-            db.NhanViens.DeleteOnSubmit(deleteNhanVien);
-            db.SubmitChanges();
-            MessageBox.Show("Xóa Thành Công");
-            loadDataNhanVien();
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                String id = DataGridViewNV.SelectedCells[0].OwningRow.Cells["MaNV"].Value.ToString();
+                NhanVien deleteNhanVien = db.NhanViens.Where(d => d.MaNV.Equals(id)).SingleOrDefault();
+                db.NhanViens.DeleteOnSubmit(deleteNhanVien);
+                db.SubmitChanges();
+                MessageBox.Show("Xóa Thành Công");
+                loadDataNhanVien();
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi rồi bạn");
+            }
         }
 
         private void BT_TheemMS_52_Click(object sender, EventArgs e)
@@ -577,12 +752,12 @@ namespace XMLCK
                     db.MuonSaches.InsertOnSubmit(muonSach);
                     db.SubmitChanges();
                     MessageBox.Show("Thêm thành công");
-                    DataGridViewMS.DataSource = db.MuonSaches.Select(s => s);
+                    loadMuonTraSach();
                 }
                 catch
                 {
                     MessageBox.Show("Có vẽ như bạn đã thêm trùng mã");
-                    DataGridViewMS.DataSource = db.MuonSaches.Select(s => s);
+                    loadMuonTraSach();
                 };
 
             }
@@ -590,7 +765,7 @@ namespace XMLCK
             {
                 MessageBox.Show("Bạn nhập bị thiếu");
             }
-            
+
         }
 
         public Boolean validateMuonSach()
@@ -638,6 +813,24 @@ namespace XMLCK
 
             }
 
+        }
+
+        public void loadDataSachQuanLyMuonSach()
+        {
+
+            QLTVDataContext db = new QLTVDataContext();
+            dataGridViewCTMS_QLMTS.DataSource = from u in db.CTMuonSaches
+                                                from s in db.Saches
+                                                where u.MaDocGia == TB_MaIDMS_52.Text
+                                                where u.MaSach == s.MaSach
+                                                orderby u.MaCTMS descending
+                                                select new
+                                                {
+                                                    MaCTMS = u.MaCTMS,
+                                                    MaSach = u.MaSach,
+                                                    TenSach = s.TenSach,
+                                                };
+            TB_SLMS_52.Text = dataGridViewCTMS_QLMTS.Rows.Count.ToString();
         }
 
         private void ComBox_MaSach_QLMTS_SelectedIndexChanged(object sender, EventArgs e)
@@ -701,6 +894,7 @@ namespace XMLCK
                                                         MaSach = u.MaSach,
                                                         TenSach = s.TenSach,
                                                     };
+                TB_SLMS_52.Text = dataGridViewCTMS_QLMTS.Rows.Count.ToString();
             }
             catch
             {
@@ -733,7 +927,7 @@ namespace XMLCK
                                                     MaSach = u.MaSach,
                                                     TenSach = s.TenSach,
                                                 };
-           
+            TB_SLMS_52.Text = dataGridViewCTMS_QLMTS.Rows.Count.ToString();
         }
 
         private void DataGridViewMS_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -754,16 +948,16 @@ namespace XMLCK
         private void BT_LuwuMS_52_Click(object sender, EventArgs e)
         {
             if (validateMuonSach())
-            {
-                string maId = TB_MaIDMS_52.Text,
-                maNV = ComBox_MaNVMS_52.SelectedValue.ToString(),
-                maDocGia = ComBox_MaDGMS_52.SelectedValue.ToString(),
-                ngayMuon = TB_NgayMS_52.Text,
-                ngayTra = TB_NgayTS_52.Text,
-                trangThai = CBox_TTmsach_52.Checked ? "true" : "false";
-                int soLuongMS = TB_SLMS_52.Text.Equals("") ? 0 : Int32.Parse(TB_SLMS_52.Text);
+            {         
                 try
                 {
+                    string maId = TB_MaIDMS_52.Text,
+                    maNV = ComBox_MaNVMS_52.SelectedValue.ToString(),
+                    maDocGia = ComBox_MaDGMS_52.SelectedValue.ToString(),
+                    ngayMuon = TB_NgayMS_52.Text,
+                    ngayTra = TB_NgayTS_52.Text,
+                    trangThai = CBox_TTmsach_52.Checked ? "true" : "false";
+                    int soLuongMS = TB_SLMS_52.Text.Equals("") ? 0 : Int32.Parse(TB_SLMS_52.Text);
                     QLTVDataContext db = new QLTVDataContext();
                     var updateMuonSach = (from s in db.MuonSaches where s.MaID == maId select s).First();
 
@@ -775,7 +969,7 @@ namespace XMLCK
                     updateMuonSach.SoLuongMS = soLuongMS;
                     db.SubmitChanges();
                     MessageBox.Show("Sửa thành công");
-                    DataGridViewMS.DataSource = db.MuonSaches.Select(s => s);
+                    loadMuonTraSach();
                 }
                 catch
                 {
@@ -790,15 +984,22 @@ namespace XMLCK
 
         private void BT_XoaMS_52_Click(object sender, EventArgs e)
         {
-            QLTVDataContext db = new QLTVDataContext();
-            String id = DataGridViewMS.SelectedCells[0].OwningRow.Cells["MaID"].Value.ToString();
-            MuonSach deleteMuonSach = db.MuonSaches.Where(d => d.MaID.Equals(id)).SingleOrDefault();
-            db.MuonSaches.DeleteOnSubmit(deleteMuonSach);
-            db.SubmitChanges();
-            MessageBox.Show("Xóa Thành Công");
-            DataGridViewMS.DataSource = db.MuonSaches.Select(s => s);
-            dataGridViewCTMS_QLMTS.DataSource = null;
-            TB_MaIDMS_52.Text = "";
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                String id = DataGridViewMS.SelectedCells[0].OwningRow.Cells["MaID"].Value.ToString();
+                MuonSach deleteMuonSach = db.MuonSaches.Where(d => d.MaID.Equals(id)).SingleOrDefault();
+                db.MuonSaches.DeleteOnSubmit(deleteMuonSach);
+                db.SubmitChanges();
+                MessageBox.Show("Xóa Thành Công");
+                loadMuonTraSach();
+                dataGridViewCTMS_QLMTS.DataSource = null;
+                TB_MaIDMS_52.Text = "";
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi rồi bạn!");
+            }
         }
 
         private void label57_Click(object sender, EventArgs e)
@@ -806,10 +1007,34 @@ namespace XMLCK
             Tab2_52.TabPages.Remove(TabC_QLS);
             Tab2_52.TabPages.Add(TabC_QLS);
             Tab2_52.SelectedTab = TabC_QLS;
+            CBox_Sach_52.Checked = true;
+            loadSach_QuanLySach();
+            loadSach_QuanLySach_DG();
+
         }
+        public void loadSach_QuanLySach()
+        {
+            QLTVDataContext db = new QLTVDataContext();
+            // tac gia
+            var tacGia = db.TacGias.Select(nv => new { nv.MaTacGia, nv.TenTacGia });
+            ComBox_MaTGia_52.DataSource = tacGia.ToList();
+            ComBox_MaTGia_52.ValueMember = "MaTacGia";
+            ComBox_MaTGia_52.DisplayMember = "TenTacGia";
+            // the loai
+            var theLoai = db.TheLoais.Select(tl => new { tl.MaTheLoai, tl.TenTheLoai });
+            ComBox_Matheloai_52.DataSource = theLoai.ToList();
+            ComBox_Matheloai_52.ValueMember = "MaTheLoai";
+            ComBox_Matheloai_52.DisplayMember = "TenTheLoai";
+            // nxb
+            var nhaXuatBan = db.NhaXuatBans.Select(nxb => new { nxb.MaNXB, nxb.TenNXB });
+            ComBox_Nxb_52.DataSource = nhaXuatBan.ToList();
+            ComBox_Nxb_52.ValueMember = "MaNXB";
+            ComBox_Nxb_52.DisplayMember = "TenNXB";
+        }
+
         public Boolean validateTacVu_QuanLySach()
         {
-            if(!CBox_Sach_52.Checked && !CBox_TgiaSach_52.Checked && !CBox_NSXSach_52.Checked && !CBox_TheloaiSach_52.Checked)
+            if (!CBox_Sach_52.Checked && !CBox_TgiaSach_52.Checked && !CBox_NSXSach_52.Checked && !CBox_TheloaiSach_52.Checked)
             {
                 return false;
             }
@@ -820,17 +1045,24 @@ namespace XMLCK
         {
             if (validateTacVu_QuanLySach())
             {
+                // sach 
+                if (CBox_Sach_52.Checked)
+                {
+                    themSach_quanlysach();
+                }
                 // tac gia
                 if (CBox_TgiaSach_52.Checked)
                 {
                     themTacGia();
                     return;
                 }
+                // nha suat ban
                 if (CBox_NSXSach_52.Checked)
                 {
                     themNSX();
                     return;
                 }
+                // the loai
                 if (CBox_TheloaiSach_52.Checked)
                 {
                     themTheLoaiSach();
@@ -841,6 +1073,37 @@ namespace XMLCK
                 MessageBox.Show("Vui lòng chọn tác vụ");
             }
         }
+        public void themSach_quanlysach()
+        {
+            if (TB_MaSach_52.Text.Equals("") || TB_TenSach_52.Text.Equals("") || TB_NamSXSach_52.Text.Equals(""))
+            {
+                MessageBox.Show("Bạn nhập vị thiếu");
+                return;
+            }
+            var themSach = new Sach()
+            {
+                MaSach = TB_MaSach_52.Text,
+                TenSach = TB_TenSach_52.Text,
+                MaTacGia = ComBox_MaTGia_52.SelectedValue.ToString(),
+                MaTheLoai = ComBox_Matheloai_52.SelectedValue.ToString(),
+                MaNXB = ComBox_Nxb_52.SelectedValue.ToString(),
+                NamSX = Int32.Parse(TB_NamSXSach_52.Text),
+            };
+
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                db.Saches.InsertOnSubmit(themSach);
+                db.SubmitChanges();
+                MessageBox.Show("Thêm sách thành công");
+                loadSach_QuanLySach_DG();
+            }
+            catch
+            {
+                MessageBox.Show("Có lẽ bạn đã thêm trùng mã");
+            }
+
+        }
 
         private void CBox_Sach_52_CheckedChanged(object sender, EventArgs e)
         {
@@ -849,13 +1112,38 @@ namespace XMLCK
 
                 CBox_TgiaSach_52.Checked = CBox_NSXSach_52.Checked = CBox_TheloaiSach_52.Checked = false;
                 QLTVDataContext db = new QLTVDataContext();
-                DataGridViewS.DataSource = db.Saches.Select(s => s);
-
+                // DataGridViewS.DataSource = db.Saches.Select(s => s);
+                loadSach_QuanLySach_DG();
+                loadSach_QuanLySach();
             }
             else
             {
                 DataGridViewS.DataSource = null;
             }
+        }
+        public void loadSach_QuanLySach_DG()
+        {
+            QLTVDataContext db = new QLTVDataContext();
+            DataGridViewS.DataSource = from s in db.Saches
+                                       from tg in db.TacGias
+                                       from nxb in db.NhaXuatBans
+                                       from tl in db.TheLoais
+                                       where s.MaTacGia == tg.MaTacGia
+                                       where s.MaNXB == nxb.MaNXB
+                                       where s.MaTheLoai == tl.MaTheLoai
+                                       orderby s.MaSach ascending
+                                       select new
+                                       {
+                                           MaSach = s.MaSach,
+                                           TenSach = s.TenSach,
+                                           MaTacGia = s.MaTacGia,
+                                           TenTacGia = tg.TenTacGia,
+                                           MaTheLoai = tl.MaTheLoai,
+                                           TenTheLoai = tl.TenTheLoai,
+                                           MaNXB = nxb.MaNXB,
+                                           TenNXB = nxb.TenNXB,
+                                           NamSX = s.NamSX,
+                                       };
         }
 
         private void CBox_TgiaSach_52_CheckedChanged(object sender, EventArgs e)
@@ -865,8 +1153,9 @@ namespace XMLCK
                 CBox_Sach_52.Checked = CBox_NSXSach_52.Checked = CBox_TheloaiSach_52.Checked = false;
                 QLTVDataContext db = new QLTVDataContext();
                 DataGridViewS.DataSource = db.TacGias.Select(s => s);
-                
-            } else
+
+            }
+            else
             {
                 DataGridViewS.DataSource = null;
             }
@@ -884,7 +1173,8 @@ namespace XMLCK
                 CBox_Sach_52.Checked = CBox_TgiaSach_52.Checked = CBox_TheloaiSach_52.Checked = false;
                 QLTVDataContext db = new QLTVDataContext();
                 DataGridViewS.DataSource = db.NhaXuatBans.Select(s => s);
-            } else
+            }
+            else
             {
                 DataGridViewS.DataSource = null;
             }
@@ -915,7 +1205,7 @@ namespace XMLCK
         }
         public void themTacGia()
         {
-            if(TB_MaTGSach_52.Text.Equals("") || TB_TenTGSach_52.Text.Equals(""))
+            if (TB_MaTGSach_52.Text.Equals("") || TB_TenTGSach_52.Text.Equals(""))
             {
                 MessageBox.Show("Bạn nhập bị thiếu rồi");
             }
@@ -925,7 +1215,7 @@ namespace XMLCK
                 TenTacGia = TB_TenTGSach_52.Text
             };
             QLTVDataContext db = new QLTVDataContext();
- 
+
             try
             {
                 db.TacGias.InsertOnSubmit(tacGia);
@@ -940,7 +1230,7 @@ namespace XMLCK
         }
         public void themNSX()
         {
-            if(TB_MaNXBSach_52.Text.Equals("") || TB_TenNXBSach_52.Text.Equals(""))
+            if (TB_MaNXBSach_52.Text.Equals("") || TB_TenNXBSach_52.Text.Equals(""))
             {
                 MessageBox.Show("Bạn nhập bị thiếu rồi");
             }
@@ -1006,7 +1296,8 @@ namespace XMLCK
             QLTVDataContext db = new QLTVDataContext();
             if (CBox_Sach_52.Checked)
             {
-                DataGridViewS.DataSource = db.Saches.Select(s => s);
+                loadSach_QuanLySach();
+                loadSach_QuanLySach_DG();
                 return;
             }
             if (CBox_TgiaSach_52.Checked)
@@ -1030,6 +1321,12 @@ namespace XMLCK
         {
             if (validateTacVu_QuanLySach())
             {
+                // sach
+                if (CBox_Sach_52.Checked)
+                {
+                    xoaSach_QuanLySach();
+                    return;
+                }
                 // tac gia
                 if (CBox_TgiaSach_52.Checked)
                 {
@@ -1053,41 +1350,88 @@ namespace XMLCK
                 MessageBox.Show("Vui lòng chọn tác vụ");
             }
         }
+        public void xoaSach_QuanLySach()
+        {
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                String id = DataGridViewS.SelectedCells[0].OwningRow.Cells["MaSach"].Value.ToString();
+                Sach deleteSach = db.Saches.Where(d => d.MaSach.Equals(id)).SingleOrDefault();
+                db.Saches.DeleteOnSubmit(deleteSach);
+                db.SubmitChanges();
+                MessageBox.Show("Xóa Sách Thành Công");
+                loadSach_QuanLySach_DG();
+                TB_MaSach_52.Text = "";
+                TB_TenSach_52.Text = "";
+                TB_NamSXSach_52.Text = "";
+            }
+            catch
+            {
+                MessageBox.Show("Có vẽ như bạn đã sai đâu đó");
+            }
+
+
+
+        }
         public void xoaTacGia()
         {
-            QLTVDataContext db = new QLTVDataContext();
-            String id = DataGridViewS.SelectedCells[0].OwningRow.Cells["MaTacGia"].Value.ToString();
-            TacGia deleteTacGia = db.TacGias.Where(d => d.MaTacGia.Equals(id)).SingleOrDefault();
-            db.TacGias.DeleteOnSubmit(deleteTacGia);
-            db.SubmitChanges();
-            MessageBox.Show("Xóa Tác Giả Thành Công");
-            loadTacGia();
-            TB_MaTGSach_52.Text = "";
-            TB_TenTGSach_52.Text = "";
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                String id = DataGridViewS.SelectedCells[0].OwningRow.Cells["MaTacGia"].Value.ToString();
+                TacGia deleteTacGia = db.TacGias.Where(d => d.MaTacGia.Equals(id)).SingleOrDefault();
+                db.TacGias.DeleteOnSubmit(deleteTacGia);
+                db.SubmitChanges();
+                MessageBox.Show("Xóa Tác Giả Thành Công");
+                loadTacGia();
+                TB_MaTGSach_52.Text = "";
+                TB_TenTGSach_52.Text = "";
+            } catch
+            {
+                MessageBox.Show("Có vẽ như bạn đã sai đâu đó");
+            }
         }
         public void xoaNSX()
         {
-            QLTVDataContext db = new QLTVDataContext();
-            String id = DataGridViewS.SelectedCells[0].OwningRow.Cells["MaNXB"].Value.ToString();
-            NhaXuatBan deleteNhaXuatBan= db.NhaXuatBans.Where(d => d.MaNXB.Equals(id)).SingleOrDefault();
-            db.NhaXuatBans.DeleteOnSubmit(deleteNhaXuatBan);
-            db.SubmitChanges();
-            MessageBox.Show("Xóa Tác Nhà Xuất Bản Thành Công");
-            loadNhaXuatBan();
-            TB_MaNXBSach_52.Text = "";
-            TB_TenNXBSach_52.Text = "";
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                String id = DataGridViewS.SelectedCells[0].OwningRow.Cells["MaNXB"].Value.ToString();
+                NhaXuatBan deleteNhaXuatBan = db.NhaXuatBans.Where(d => d.MaNXB.Equals(id)).SingleOrDefault();
+                db.NhaXuatBans.DeleteOnSubmit(deleteNhaXuatBan);
+                db.SubmitChanges();
+                MessageBox.Show("Xóa Tác Nhà Xuất Bản Thành Công");
+                loadNhaXuatBan();
+                TB_MaNXBSach_52.Text = "";
+                TB_TenNXBSach_52.Text = "";
+            }
+            catch
+            {
+                MessageBox.Show("Có vẽ như bạn đã sai đâu đó");
+            }
+
+            
         }
         public void xoaTheLoaiSach()
         {
-            QLTVDataContext db = new QLTVDataContext();
-            String id = DataGridViewS.SelectedCells[0].OwningRow.Cells["MaTheLoai"].Value.ToString();
-            TheLoai deleteTheLoai = db.TheLoais.Where(d => d.MaTheLoai.Equals(id)).SingleOrDefault();
-            db.TheLoais.DeleteOnSubmit(deleteTheLoai);
-            db.SubmitChanges();
-            MessageBox.Show("Xóa Thể Loại Sách Thành Công");
-            loadTheLoaiSach();
-            TB_MatheloaiSach_52.Text = "";
-            TB_TenTheloaiSach_52.Text = "";
+            try
+            {
+                QLTVDataContext db = new QLTVDataContext();
+                String id = DataGridViewS.SelectedCells[0].OwningRow.Cells["MaTheLoai"].Value.ToString();
+                TheLoai deleteTheLoai = db.TheLoais.Where(d => d.MaTheLoai.Equals(id)).SingleOrDefault();
+                db.TheLoais.DeleteOnSubmit(deleteTheLoai);
+                db.SubmitChanges();
+                MessageBox.Show("Xóa Thể Loại Sách Thành Công");
+                loadTheLoaiSach();
+                TB_MatheloaiSach_52.Text = "";
+                TB_TenTheloaiSach_52.Text = "";               
+            }
+            catch
+            {
+                MessageBox.Show("Có vẽ như bạn đã sai đâu đó");
+            }
+
+
         }
 
 
@@ -1126,6 +1470,25 @@ namespace XMLCK
             DataGridViewS.CurrentRow.Selected = true;
             if (validateTacVu_QuanLySach())
             {
+                //
+                if (CBox_Sach_52.Checked)
+                {
+                    try
+                    {
+                        TB_MaSach_52.Text = DataGridViewS.Rows[e.RowIndex].Cells["MaSach"].Value.ToString();
+                        TB_TenSach_52.Text = DataGridViewS.Rows[e.RowIndex].Cells["TenSach"].Value.ToString();
+                        ComBox_MaTGia_52.SelectedValue = DataGridViewS.Rows[e.RowIndex].Cells["MaTacGia"].Value.ToString();
+                        ComBox_Matheloai_52.SelectedValue = DataGridViewS.Rows[e.RowIndex].Cells["MaTheLoai"].Value.ToString();
+                        ComBox_Nxb_52.SelectedValue = DataGridViewS.Rows[e.RowIndex].Cells["MaNXB"].Value.ToString();
+                        TB_NamSXSach_52.Text = DataGridViewS.Rows[e.RowIndex].Cells["NamSX"].Value.ToString();
+                        return;
+                    }
+                    catch
+                    {
+                        return;
+                    }
+
+                }
                 // tac gia
                 if (CBox_TgiaSach_52.Checked)
                 {
@@ -1139,7 +1502,7 @@ namespace XMLCK
                     {
                         return;
                     }
-                    
+
                 }
                 // nxb
                 if (CBox_NSXSach_52.Checked)
@@ -1175,5 +1538,144 @@ namespace XMLCK
                 MessageBox.Show("Vui lòng chọn tác vụ");
             }
         }
-    }
+
+        private void BT_LuwuSS_52_Click(object sender, EventArgs e)
+        {
+
+        }
+        public void suaSach_QuanLySach()
+        {
+            try
+            {
+                if (TB_MaSach_52.Text.Equals("") || TB_TenSach_52.Text.Equals("") || TB_NamSXSach_52.Text.Equals(""))
+                {
+                    MessageBox.Show("Bạn nhập vị thiếu");
+                    return;
+                }
+                QLTVDataContext db = new QLTVDataContext();
+                var updateSach = (from s in db.Saches where s.MaSach == TB_MaSach_52.Text select s).First();
+                updateSach.TenSach = TB_TenSach_52.Text;
+                updateSach.MaTacGia = ComBox_MaTGia_52.SelectedValue.ToString();
+                updateSach.MaTheLoai = ComBox_Matheloai_52.SelectedValue.ToString();
+                updateSach.MaNXB = ComBox_Nxb_52.SelectedValue.ToString();
+                updateSach.NamSX = Int32.Parse(TB_NamSXSach_52.Text);
+                db.SubmitChanges();
+                MessageBox.Show("Sửa sách thành công");
+                loadSach_QuanLySach_DG();
+            }
+            catch
+            {
+                MessageBox.Show("Có lẽ bạn đã sai ở đâu đó");
+            }
+        }
+
+        public void suaTacGia()
+        {
+            
+            try
+            {
+                if (TB_MaTGSach_52.Text.Equals("") || TB_TenTGSach_52.Text.Equals(""))
+                {
+                    MessageBox.Show("Bạn nhập bị thiếu rồi");
+                }
+                QLTVDataContext db = new QLTVDataContext();
+                var updateTacGia = (from s in db.TacGias where s.MaTacGia == TB_MaTGSach_52.Text select s).First();
+                updateTacGia.TenTacGia = TB_TenTGSach_52.Text;
+                db.SubmitChanges();
+                MessageBox.Show("Sửa tác giả thành công");
+                loadTacGia();
+            }
+            catch
+            {
+                MessageBox.Show("Có vẽ như bạn đã bị sai");
+            };
+        }
+        public void suaNSX()
+        {
+
+            try
+            {
+                if (TB_MaNXBSach_52.Text.Equals("") || TB_TenNXBSach_52.Text.Equals(""))
+                {
+                    MessageBox.Show("Bạn nhập bị thiếu rồi");
+                }
+                QLTVDataContext db = new QLTVDataContext();
+                var nhaSanXuat = (from s in db.NhaXuatBans where s.MaNXB == TB_MaNXBSach_52.Text select s).First();
+                nhaSanXuat.TenNXB = TB_TenNXBSach_52.Text;
+                db.SubmitChanges();
+                MessageBox.Show("Sửa nhà xuất bản thành công");
+                loadNhaXuatBan();
+            }
+            catch
+            {
+                MessageBox.Show("Có vẽ như bạn đã bị sai");
+            };
+        }
+        public void suaTheLoaiSach()
+        {
+            try
+            {
+                if (TB_MatheloaiSach_52.Text.Equals("") || TB_TenTheloaiSach_52.Text.Equals(""))
+                {
+                    MessageBox.Show("Bạn nhập bị thiếu rồi");
+                }
+                QLTVDataContext db = new QLTVDataContext();
+                var theLoai = (from s in db.TheLoais where s.MaTheLoai == TB_MatheloaiSach_52.Text select s).First();
+                theLoai.TenTheLoai = TB_TenTheloaiSach_52.Text;
+                db.SubmitChanges();
+                MessageBox.Show("Sửa thể loại thành công");
+                loadTheLoaiSach();
+            }
+            catch
+            {
+                MessageBox.Show("Có vẽ như bạn đã bị sai");
+            };
+        }
+
+
+        private void BT_Luu_QuanLySach_52_Click(object sender, EventArgs e)
+        {
+            if (validateTacVu_QuanLySach())
+            {
+                // sach 
+                if (CBox_Sach_52.Checked)
+                {
+                    suaSach_QuanLySach();
+                    return;
+                }
+                // tac gia
+                if (CBox_TgiaSach_52.Checked)
+                {
+                    suaTacGia();
+                    return;
+                }
+                // nha suat ban
+                if (CBox_NSXSach_52.Checked)
+                {
+                    suaNSX();
+                    return;
+                }
+                // the loai
+                if (CBox_TheloaiSach_52.Checked)
+                {
+                    suaTheLoaiSach();
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn tác vụ");
+            }
+        }
+
+        private void Label36_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            loadDataSachQuanLyMuonSach();
+        }
+    } 
 }

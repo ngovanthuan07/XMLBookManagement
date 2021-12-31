@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QLTV.dbml</DependentUpon>
     </Compile>
+    <Compile Include="StaticUser.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

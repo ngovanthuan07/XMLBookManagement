@@ -29,7 +29,6 @@ namespace XMLCK
         /// </summary>
         private void InitializeComponent()
         {
-            this.Label5 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.TBLogin_52 = new System.Windows.Forms.TextBox();
             this.TBPass_52 = new System.Windows.Forms.TextBox();
@@ -38,7 +37,6 @@ namespace XMLCK
             this.Button1 = new System.Windows.Forms.Button();
             this.Label2 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
-            this.Label4 = new System.Windows.Forms.Label();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
@@ -46,16 +44,6 @@ namespace XMLCK
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Label5
-            // 
-            this.Label5.AutoSize = true;
-            this.Label5.Location = new System.Drawing.Point(361, 344);
-            this.Label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(39, 13);
-            this.Label5.TabIndex = 36;
-            this.Label5.Text = "Label5";
             // 
             // Label1
             // 
@@ -139,20 +127,10 @@ namespace XMLCK
             this.Label3.TabIndex = 34;
             this.Label3.Text = "PassWord";
             // 
-            // Label4
-            // 
-            this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(222, 344);
-            this.Label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(39, 13);
-            this.Label4.TabIndex = 35;
-            this.Label4.Text = "Label4";
-            // 
             // PictureBox2
             // 
             this.PictureBox2.Image = global::XMLCK.Properties.Resources.padlock;
-            this.PictureBox2.Location = new System.Drawing.Point(442, 175);
+            this.PictureBox2.Location = new System.Drawing.Point(456, 169);
             this.PictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PictureBox2.Name = "PictureBox2";
             this.PictureBox2.Size = new System.Drawing.Size(24, 26);
@@ -164,7 +142,7 @@ namespace XMLCK
             // PictureBox1
             // 
             this.PictureBox1.Image = global::XMLCK.Properties.Resources.user__1_;
-            this.PictureBox1.Location = new System.Drawing.Point(442, 128);
+            this.PictureBox1.Location = new System.Drawing.Point(456, 122);
             this.PictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(24, 26);
@@ -187,8 +165,6 @@ namespace XMLCK
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(614, 394);
-            this.Controls.Add(this.Label5);
-            this.Controls.Add(this.Label4);
             this.Controls.Add(this.Label3);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.Button1);
@@ -215,7 +191,6 @@ namespace XMLCK
 
         internal System.Windows.Forms.PictureBox PictureBox3;
         internal System.Windows.Forms.PictureBox PictureBox2;
-        internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.TextBox TBLogin_52;
         internal System.Windows.Forms.TextBox TBPass_52;
@@ -224,7 +199,6 @@ namespace XMLCK
         internal System.Windows.Forms.Button Button1;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Label Label3;
-        internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.PictureBox PictureBox1;
     }
 }

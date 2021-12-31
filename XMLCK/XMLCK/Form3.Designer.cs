@@ -29,8 +29,6 @@ namespace XMLCK
         /// </summary>
         private void InitializeComponent()
         {
-            this.LBKT = new System.Windows.Forms.Label();
-            this.LBTB = new System.Windows.Forms.Label();
             this.CBox = new System.Windows.Forms.CheckBox();
             this.Button2 = new System.Windows.Forms.Button();
             this.Button1 = new System.Windows.Forms.Button();
@@ -43,26 +41,6 @@ namespace XMLCK
             this.Label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // LBKT
-            // 
-            this.LBKT.AutoSize = true;
-            this.LBKT.ForeColor = System.Drawing.Color.Red;
-            this.LBKT.Location = new System.Drawing.Point(256, 172);
-            this.LBKT.Name = "LBKT";
-            this.LBKT.Size = new System.Drawing.Size(97, 13);
-            this.LBKT.TabIndex = 35;
-            this.LBKT.Text = "Trùng mật khẩu cũ";
-            // 
-            // LBTB
-            // 
-            this.LBTB.AutoSize = true;
-            this.LBTB.ForeColor = System.Drawing.Color.Red;
-            this.LBTB.Location = new System.Drawing.Point(256, 217);
-            this.LBTB.Name = "LBTB";
-            this.LBTB.Size = new System.Drawing.Size(124, 13);
-            this.LBTB.TabIndex = 34;
-            this.LBTB.Text = "Mật khẩu không khớp !!!";
-            // 
             // CBox
             // 
             this.CBox.AutoSize = true;
@@ -73,6 +51,7 @@ namespace XMLCK
             this.CBox.TabIndex = 33;
             this.CBox.Text = "Hiển thị mật khẩu";
             this.CBox.UseVisualStyleBackColor = true;
+            this.CBox.CheckedChanged += new System.EventHandler(this.CBox_CheckedChanged);
             // 
             // Button2
             // 
@@ -168,8 +147,6 @@ namespace XMLCK
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(559, 367);
-            this.Controls.Add(this.LBKT);
-            this.Controls.Add(this.LBTB);
             this.Controls.Add(this.CBox);
             this.Controls.Add(this.Button2);
             this.Controls.Add(this.Button1);
@@ -188,9 +165,6 @@ namespace XMLCK
         }
 
         #endregion
-
-        internal System.Windows.Forms.Label LBKT;
-        internal System.Windows.Forms.Label LBTB;
         internal System.Windows.Forms.CheckBox CBox;
         internal System.Windows.Forms.Button Button2;
         internal System.Windows.Forms.Button Button1;
